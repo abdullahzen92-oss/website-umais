@@ -87,7 +87,6 @@ const TABS = [
   { id: 'overview', label: 'Ringkasan', icon: <LayoutDashboard size={18} /> },
   { id: 'hero', label: 'Beranda / Hero', icon: <FileText size={18} /> },
   { id: 'stats', label: 'Statistik', icon: <BarChart3 size={18} /> },
-  { id: 'overview-section', label: 'Keunggulan', icon: <Globe size={18} /> },
   { id: 'visi-misi', label: 'Visi & Misi', icon: <Eye size={18} /> },
   { id: 'fasilitas', label: 'Fasilitas', icon: <ImageIcon size={18} /> },
   { id: 'gallery', label: 'Galeri Foto', icon: <Camera size={18} /> },
@@ -177,7 +176,6 @@ export default function AdminDashboard() {
           {activeTab === 'overview' && <OverviewTab content={content} />}
           {activeTab === 'hero' && <HeroTab content={content} updateContent={updateContent} saveToCloud={saveToCloud} saveStatus={saveStatus} />}
           {activeTab === 'stats' && <StatsTab content={content} updateContent={updateContent} saveToCloud={saveToCloud} saveStatus={saveStatus} />}
-          {activeTab === 'overview-section' && <OverviewSectionTab content={content} updateContent={updateContent} saveToCloud={saveToCloud} saveStatus={saveStatus} />}
           {activeTab === 'visi-misi' && <VisiMisiTab content={content} updateContent={updateContent} saveToCloud={saveToCloud} saveStatus={saveStatus} />}
           {activeTab === 'fasilitas' && <FasilitasTab content={content} updateContent={updateContent} saveToCloud={saveToCloud} saveStatus={saveStatus} />}
           {activeTab === 'gallery' && <GalleryTab content={content} updateContent={updateContent} saveToCloud={saveToCloud} saveStatus={saveStatus} />}
@@ -363,68 +361,12 @@ function OverviewTab({ content }) {
   );
 }
 
-/* ===== TAB: HERO ===== */
+/* ===== TAB: HERO (includes Keunggulan / Overview Section) ===== */
 
 function HeroTab({ content, updateContent, saveToCloud, saveStatus }) {
   const { hero } = content;
   const update = (key, val) => updateContent('hero', prev => ({ ...prev, [key]: val }));
 
-  return (
-    <div>
-      <div className="admin-section-card">
-        <h3>🏠 Konten Hero Section (Beranda)</h3>
-        <ImageUpload
-          label="Gambar Background Hero"
-          value={hero.image}
-          onChange={(url) => update('image', url)}
-          onClear={() => update('image', '')}
-          folder="hero"
-        />
-        <FieldGroup label="Badge / Label Kecil">
-          <input className="admin-input" value={hero.badge} onChange={e => update('badge', e.target.value)} />
-        </FieldGroup>
-        <FieldGroup label="Headline Utama">
-          <input className="admin-input" value={hero.headline} onChange={e => update('headline', e.target.value)} />
-        </FieldGroup>
-        <FieldGroup label="Subtitle / Deskripsi">
-          <textarea className="admin-textarea" rows={3} value={hero.subtitle} onChange={e => update('subtitle', e.target.value)} />
-        </FieldGroup>
-      </div>
-      <SaveButton saveToCloud={saveToCloud} saveStatus={saveStatus} />
-    </div>
-  );
-}
-
-/* ===== TAB: STATS ===== */
-
-function StatsTab({ content, updateContent, saveToCloud, saveStatus }) {
-  const { stats } = content;
-  const update = (key, val) => updateContent('stats', prev => ({ ...prev, [key]: val }));
-
-  return (
-    <div>
-      <div className="admin-section-card">
-        <h3>📊 Statistik Sekolah</h3>
-        <div className="admin-field-row">
-          <FieldGroup label="Alumni Berprestasi">
-            <input className="admin-input" value={stats.alumni} onChange={e => update('alumni', e.target.value)} />
-          </FieldGroup>
-          <FieldGroup label="Tenaga Pendidik">
-            <input className="admin-input" value={stats.teachers} onChange={e => update('teachers', e.target.value)} />
-          </FieldGroup>
-          <FieldGroup label="Tahun Berdiri">
-            <input className="admin-input" value={stats.years} onChange={e => update('years', e.target.value)} />
-          </FieldGroup>
-        </div>
-      </div>
-      <SaveButton saveToCloud={saveToCloud} saveStatus={saveStatus} />
-    </div>
-  );
-}
-
-/* ===== TAB: OVERVIEW SECTION ===== */
-
-function OverviewSectionTab({ content, updateContent, saveToCloud, saveStatus }) {
   const cards = content.overviewCards || [];
   const iconOptions = Object.keys(ICON_MAP);
 
@@ -446,8 +388,33 @@ function OverviewSectionTab({ content, updateContent, saveToCloud, saveStatus })
 
   return (
     <div>
+      {/* Hero Section */}
       <div className="admin-section-card">
+        <h3>🏠 Konten Hero Section (Beranda)</h3>
+        <ImageUpload
+          label="Gambar Background Hero"
+          value={hero.image}
+          onChange={(url) => update('image', url)}
+          onClear={() => update('image', '')}
+          folder="hero"
+        />
+        <FieldGroup label="Badge / Label Kecil">
+          <input className="admin-input" value={hero.badge} onChange={e => update('badge', e.target.value)} />
+        </FieldGroup>
+        <FieldGroup label="Headline Utama">
+          <input className="admin-input" value={hero.headline} onChange={e => update('headline', e.target.value)} />
+        </FieldGroup>
+        <FieldGroup label="Subtitle / Deskripsi">
+          <textarea className="admin-textarea" rows={3} value={hero.subtitle} onChange={e => update('subtitle', e.target.value)} />
+        </FieldGroup>
+      </div>
+
+      {/* Screenshot / Keunggulan Section */}
+      <div className="admin-section-card" style={{ marginTop: '20px' }}>
         <h3>⭐ Section Keunggulan Kami</h3>
+        <p className="admin-hint">
+          Konten section "Keunggulan Kami" yang tampil di bawah hero banner pada halaman Beranda.
+        </p>
         <FieldGroup label="Judul Section">
           <input className="admin-input" value={content.overviewTitle} onChange={e => updateContent('overviewTitle', e.target.value)} />
         </FieldGroup>
@@ -456,9 +423,9 @@ function OverviewSectionTab({ content, updateContent, saveToCloud, saveStatus })
         </FieldGroup>
       </div>
 
-      {/* Overview Cards Editor */}
+      {/* Feature Cards Editor */}
       <div className="admin-section-card" style={{ marginTop: '16px' }}>
-        <h3>🃏 Kartu Keunggulan</h3>
+        <h3>🃏 Kartu Keunggulan ({cards.length} kartu)</h3>
         <p className="admin-hint">
           Kelola kartu-kartu keunggulan yang tampil di bawah judul section. Pilih icon, judul, dan deskripsi untuk setiap kartu.
         </p>
@@ -504,6 +471,34 @@ function OverviewSectionTab({ content, updateContent, saveToCloud, saveStatus })
       <button className="btn btn-primary btn-sm" onClick={addCard} style={{ marginTop: '8px' }}>
         <Plus size={14} /> Tambah Kartu Keunggulan
       </button>
+
+      <SaveButton saveToCloud={saveToCloud} saveStatus={saveStatus} />
+    </div>
+  );
+}
+
+/* ===== TAB: STATS ===== */
+
+function StatsTab({ content, updateContent, saveToCloud, saveStatus }) {
+  const { stats } = content;
+  const update = (key, val) => updateContent('stats', prev => ({ ...prev, [key]: val }));
+
+  return (
+    <div>
+      <div className="admin-section-card">
+        <h3>📊 Statistik Sekolah</h3>
+        <div className="admin-field-row">
+          <FieldGroup label="Alumni Berprestasi">
+            <input className="admin-input" value={stats.alumni} onChange={e => update('alumni', e.target.value)} />
+          </FieldGroup>
+          <FieldGroup label="Tenaga Pendidik">
+            <input className="admin-input" value={stats.teachers} onChange={e => update('teachers', e.target.value)} />
+          </FieldGroup>
+          <FieldGroup label="Tahun Berdiri">
+            <input className="admin-input" value={stats.years} onChange={e => update('years', e.target.value)} />
+          </FieldGroup>
+        </div>
+      </div>
       <SaveButton saveToCloud={saveToCloud} saveStatus={saveStatus} />
     </div>
   );
