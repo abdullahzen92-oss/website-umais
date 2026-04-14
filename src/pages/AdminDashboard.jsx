@@ -425,6 +425,25 @@ function StatsTab({ content, updateContent, saveToCloud, saveStatus }) {
 /* ===== TAB: OVERVIEW SECTION ===== */
 
 function OverviewSectionTab({ content, updateContent, saveToCloud, saveStatus }) {
+  const cards = content.overviewCards || [];
+  const iconOptions = Object.keys(ICON_MAP);
+
+  const updateCard = (index, key, value) => {
+    updateContent('overviewCards', prev => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], [key]: value };
+      return updated;
+    });
+  };
+
+  const addCard = () => {
+    updateContent('overviewCards', prev => [...prev, { icon: 'Star', title: '', description: '' }]);
+  };
+
+  const removeCard = (index) => {
+    updateContent('overviewCards', prev => prev.filter((_, i) => i !== index));
+  };
+
   return (
     <div>
       <div className="admin-section-card">
@@ -436,6 +455,55 @@ function OverviewSectionTab({ content, updateContent, saveToCloud, saveStatus })
           <textarea className="admin-textarea" rows={3} value={content.overviewDesc} onChange={e => updateContent('overviewDesc', e.target.value)} />
         </FieldGroup>
       </div>
+
+      {/* Overview Cards Editor */}
+      <div className="admin-section-card" style={{ marginTop: '16px' }}>
+        <h3>🃏 Kartu Keunggulan</h3>
+        <p className="admin-hint">
+          Kelola kartu-kartu keunggulan yang tampil di bawah judul section. Pilih icon, judul, dan deskripsi untuk setiap kartu.
+        </p>
+      </div>
+
+      {cards.map((card, i) => (
+        <div key={i} className="admin-section-card">
+          <div className="admin-card-header-row">
+            <h3 style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span className="admin-icon-preview">{ICON_MAP[card.icon] || <Star size={20} />}</span>
+              {card.title || `Kartu ${i + 1}`}
+            </h3>
+            <button className="admin-remove-btn" onClick={() => removeCard(i)} title="Hapus">×</button>
+          </div>
+
+          <FieldGroup label="Icon">
+            <div className="admin-icon-grid">
+              {iconOptions.map(iconName => (
+                <button
+                  key={iconName}
+                  className={`admin-icon-option ${card.icon === iconName ? 'selected' : ''}`}
+                  onClick={() => updateCard(i, 'icon', iconName)}
+                  title={iconName}
+                  type="button"
+                >
+                  {ICON_MAP[iconName]}
+                </button>
+              ))}
+            </div>
+          </FieldGroup>
+
+          <div className="admin-field-row">
+            <FieldGroup label="Judul Kartu">
+              <input className="admin-input" value={card.title} onChange={e => updateCard(i, 'title', e.target.value)} placeholder="Contoh: Nilai Islami" />
+            </FieldGroup>
+            <FieldGroup label="Deskripsi">
+              <input className="admin-input" value={card.description} onChange={e => updateCard(i, 'description', e.target.value)} placeholder="Deskripsi singkat keunggulan..." />
+            </FieldGroup>
+          </div>
+        </div>
+      ))}
+
+      <button className="btn btn-primary btn-sm" onClick={addCard} style={{ marginTop: '8px' }}>
+        <Plus size={14} /> Tambah Kartu Keunggulan
+      </button>
       <SaveButton saveToCloud={saveToCloud} saveStatus={saveStatus} />
     </div>
   );
