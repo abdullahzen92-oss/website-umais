@@ -226,7 +226,10 @@ function mergeWithDefaults(saved) {
     aboutGallery: saved.aboutGallery || DEFAULT_CONTENT.aboutGallery,
     testimonials: saved.testimonials || DEFAULT_CONTENT.testimonials,
     instagramPosts: saved.instagramPosts || DEFAULT_CONTENT.instagramPosts,
-    overviewCards: saved.overviewCards || DEFAULT_CONTENT.overviewCards,
+    overviewCards:
+      Array.isArray(saved.overviewCards) && saved.overviewCards.length > 0
+        ? saved.overviewCards
+        : DEFAULT_CONTENT.overviewCards,
   };
 }
 
@@ -344,9 +347,9 @@ export function SiteContentProvider({ children }) {
     }
 
     loadContent();
-    
-    return () => { 
-      cancelled = true; 
+
+    return () => {
+      cancelled = true;
       if (channel) {
         supabase.removeChannel(channel);
       }
@@ -463,8 +466,8 @@ export function useSiteContent() {
   const ctx = useContext(SiteContentContext);
   if (!ctx) return {
     content: DEFAULT_CONTENT,
-    updateContent: () => {},
-    resetContent: () => {},
+    updateContent: () => { },
+    resetContent: () => { },
     saveToCloud: async () => true,
     loading: false,
     saveStatus: 'idle',
