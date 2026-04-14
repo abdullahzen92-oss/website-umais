@@ -58,6 +58,12 @@ const DEFAULT_CONTENT = {
   aboutDesc: 'SMP Ummul Mukminin Aisyah (UMAIS) Bogor adalah sekolah Islam khusus muslimah yang berdiri dengan visi mencetak generasi muslimah yang cerdas, berakhlak mulia, dan berwawasan nasional.',
   overviewTitle: 'Sekolah Islam Kreatif untuk Muslimah Masa Depan',
   overviewDesc: 'SMP UMAIS Bogor hadir sebagai wadah pendidikan yang membentuk generasi muslimah cerdas, berakhlak, dan siap menghadapi tantangan global.',
+  overviewCards: [
+    { icon: 'Heart', title: 'Nilai Islami', description: 'Menanamkan akhlakul karimah dan nilai-nilai Islam dalam setiap aspek pembelajaran.' },
+    { icon: 'Globe', title: 'Standar Nasional', description: 'Kurikulum yang memenuhi standar pendidikan nasional untuk daya saing di tingkat nasional.' },
+    { icon: 'BookOpen', title: 'Kurikulum Terpadu', description: "Perpaduan kurikulum merdeka, dan program Tahfidz Al-Qur'an." },
+    { icon: 'Award', title: 'Prestasi Unggulan', description: 'Meraih berbagai prestasi di tingkat kota, provinsi, hingga nasional.' },
+  ],
 
   gallery: [
     { image: '/images/hero-school.png', caption: 'Kampus SMP UMAIS Bogor', category: 'Sekolah' },
@@ -220,6 +226,7 @@ function mergeWithDefaults(saved) {
     aboutGallery: saved.aboutGallery || DEFAULT_CONTENT.aboutGallery,
     testimonials: saved.testimonials || DEFAULT_CONTENT.testimonials,
     instagramPosts: saved.instagramPosts || DEFAULT_CONTENT.instagramPosts,
+    overviewCards: saved.overviewCards || DEFAULT_CONTENT.overviewCards,
   };
 }
 

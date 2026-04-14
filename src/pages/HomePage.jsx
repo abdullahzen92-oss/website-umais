@@ -5,11 +5,49 @@ import {
   BookOpen, Globe, Award, Heart, GraduationCap,
   Users, Star, ArrowRight, MessageCircle, Calendar,
   BookOpenCheck, Microscope, Palette, Dumbbell, Quote,
-  ChevronLeft, ChevronRight, MapPin
+  ChevronLeft, ChevronRight, MapPin,
+  PenTool, Monitor, Music, Trophy, Sparkles,
+  Camera, Scissors, Leaf, Coffee, Compass, Headphones,
+  Mic, Gamepad2, Bike, FlaskConical, Drama,
+  Landmark, Sprout, Library, Building
 } from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
 import ScrollReveal from '../components/shared/ScrollReveal';
 import './HomePage.css';
+
+/* ===== ICON MAP for dynamic overview cards ===== */
+const OVERVIEW_ICON_MAP = {
+  Heart: <Heart size={28} />,
+  Globe: <Globe size={28} />,
+  BookOpen: <BookOpen size={28} />,
+  Award: <Award size={28} />,
+  GraduationCap: <GraduationCap size={28} />,
+  Star: <Star size={28} />,
+  Users: <Users size={28} />,
+  Palette: <Palette size={28} />,
+  PenTool: <PenTool size={28} />,
+  Monitor: <Monitor size={28} />,
+  Dumbbell: <Dumbbell size={28} />,
+  Music: <Music size={28} />,
+  Trophy: <Trophy size={28} />,
+  Sparkles: <Sparkles size={28} />,
+  BookOpenCheck: <BookOpenCheck size={28} />,
+  Camera: <Camera size={28} />,
+  Scissors: <Scissors size={28} />,
+  Leaf: <Leaf size={28} />,
+  Coffee: <Coffee size={28} />,
+  Compass: <Compass size={28} />,
+  Headphones: <Headphones size={28} />,
+  Mic: <Mic size={28} />,
+  Gamepad2: <Gamepad2 size={28} />,
+  Bike: <Bike size={28} />,
+  FlaskConical: <FlaskConical size={28} />,
+  Drama: <Drama size={28} />,
+  Landmark: <Landmark size={28} />,
+  Sprout: <Sprout size={28} />,
+  Library: <Library size={28} />,
+  Building: <Building size={28} />,
+};
 
 /* ===== HERO ===== */
 function HeroSection() {
@@ -92,35 +130,11 @@ function HeroSection() {
 }
 
 /* ===== OVERVIEW CARDS ===== */
-const overviewData = [
-  {
-    icon: <Heart size={28} />,
-    title: 'Nilai Islami',
-    description: 'Menanamkan akhlakul karimah dan nilai-nilai Islam dalam setiap aspek pembelajaran.',
-    color: 'var(--pink-500)',
-  },
-  {
-    icon: <Globe size={28} />,
-    title: 'Standar Nasional',
-    description: 'Kurikulum yang memenuhi standar pendidikan nasional untuk daya saing di tingkat nasional.',
-    color: 'var(--pink-600)',
-  },
-  {
-    icon: <BookOpen size={28} />,
-    title: 'Kurikulum Terpadu',
-    description: 'Perpaduan kurikulum merdeka, dan program Tahfidz Al-Qur\'an.',
-    color: 'var(--pink-700)',
-  },
-  {
-    icon: <Award size={28} />,
-    title: 'Prestasi Unggulan',
-    description: 'Meraih berbagai prestasi di tingkat kota, provinsi, hingga nasional.',
-    color: 'var(--pink-800)',
-  },
-];
+const OVERVIEW_COLORS = ['var(--pink-500)', 'var(--pink-600)', 'var(--pink-700)', 'var(--pink-800)'];
 
 function OverviewSection() {
   const { content } = useSiteContent();
+  const overviewCards = content.overviewCards || [];
 
   return (
     <section className="section overview-section">
@@ -135,11 +149,11 @@ function OverviewSection() {
         </ScrollReveal>
 
         <div className="overview-grid">
-          {overviewData.map((item, i) => (
+          {overviewCards.map((item, i) => (
             <ScrollReveal key={i} delay={i * 0.1}>
               <div className="card overview-card">
-                <div className="overview-icon" style={{ background: item.color }}>
-                  {item.icon}
+                <div className="overview-icon" style={{ background: OVERVIEW_COLORS[i % OVERVIEW_COLORS.length] }}>
+                  {OVERVIEW_ICON_MAP[item.icon] || <Star size={28} />}
                 </div>
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
