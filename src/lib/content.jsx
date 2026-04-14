@@ -61,7 +61,7 @@ const DEFAULT_CONTENT = {
   overviewCards: [
     { icon: 'Heart', title: 'Nilai Islami', description: 'Menanamkan akhlakul karimah dan nilai-nilai Islam dalam setiap aspek pembelajaran.' },
     { icon: 'Globe', title: 'Standar Nasional', description: 'Kurikulum yang memenuhi standar pendidikan nasional untuk daya saing di tingkat nasional.' },
-    { icon: 'BookOpen', title: 'Kurikulum Terpadu', description: "Perpaduan kurikulum merdeka, dan program Tahfidz Al-Qur'an." },
+    { icon: 'BookOpen', title: 'Kurikulum Terpadu', description: "Perpaduan kurikulum nasional, dan program Tahfidz Al-Qur'an." },
     { icon: 'Award', title: 'Prestasi Unggulan', description: 'Meraih berbagai prestasi di tingkat kota, provinsi, hingga nasional.' },
   ],
 
