@@ -108,7 +108,7 @@ const overviewData = [
   {
     icon: <BookOpen size={28} />,
     title: 'Kurikulum Terpadu',
-    description: 'Perpaduan kurikulum nasional, Cambridge, dan program Tahfidz Al-Qur\'an.',
+    description: 'Perpaduan kurikulum nasional, dan program Tahfidz Al-Qur\'an.',
     color: 'var(--pink-700)',
   },
   {
